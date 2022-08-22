@@ -22,8 +22,8 @@ Argument         | Required | Description
 `--create-addon` | No       | An optional parameter that enables creation of an AceAddon
 `--function`     | Yes      | The function that will expose the icons for external code
 
-### Example (Retail)
+### Example
 
 ```python
-py .\update-icon-db.py --input ".\manifestinterfacedata.csv" --output "MediaRetail.lua" --blacklist ".\icon-blacklist-retail.txt" --namespace "IconDB" --function "GetIcons"
+py .\update-icon-db.py --input ".\manifestinterfacedata.csv" --output "IconDB.lua" --blacklist ".\icon-blacklist.txt" --namespace "IconDB" --function "GetIcons"
 ```
