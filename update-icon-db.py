@@ -91,13 +91,18 @@ def write_output():
 		listfile_fs = open(listfile, "r", encoding = "utf8")
 		output_fs = open(output, "w", encoding = "utf8")
 
+		output_fs.write("--- @class " + addon_namespace + "\n")
+
 		if addon_create:
 			output_fs.write(addon_namespace + " = LibStub(\"AceAddon-3.0\"):NewAddon(\"" + addon_namespace + "\")\n")
 		else:
 			output_fs.write(addon_namespace + " = " + addon_namespace + " or {}\n")
 
 		output_fs.write("\n")
+		output_fs.write("--- @type table<integer,string>\n")
 		output_fs.write("local icons = {\n")
+
+		fd_ids = []
 
 		for line in listfile_fs:
 			parts = line.split(",")
@@ -113,13 +118,28 @@ def write_output():
 			if not is_valid_icon_file(fd_id, full_path):
 				continue
 
-			output_fs.write("\t\"" + strip_path(file_name).lower() + "\",\n")
+			output_fs.write("\t[" + str(fd_id) + "] = \"" + strip_path(file_name).lower() + "\",\n")
+			fd_ids.append(int(fd_id))
 			num_icons += 1
 
 		output_fs.write("}\n")
+
+		fd_ids.sort()
+
 		output_fs.write("\n")
+		output_fs.write("--- @type integer[]\n")
+		output_fs.write("local order = {\n")
+
+		for fd_id in fd_ids:
+			output_fs.write("\t" + str(fd_id) + ",\n")
+
+		output_fs.write("}\n")
+		output_fs.write("\n")
+
+		output_fs.write("--- @return table<integer,string>\n")
+		output_fs.write("--- @return integer[]\n")
 		output_fs.write("function " + addon_namespace + ":" + addon_function + "()\n")
-		output_fs.write("\treturn icons\n")
+		output_fs.write("\treturn icons, order\n")
 		output_fs.write("end")
 		output_fs.write("\n")
 
