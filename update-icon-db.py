@@ -6,6 +6,7 @@ addon_create = False
 listfile = ""
 output = ""
 blacklist = ""
+file_header = ""
 
 blacklist_parsed = {}
 
@@ -16,6 +17,7 @@ def parse_args():
 	global addon_namespace
 	global addon_function
 	global addon_create
+	global file_header
 
 	for i in range(1, len(sys.argv)):
 		current = sys.argv[i]
@@ -36,6 +38,8 @@ def parse_args():
 			addon_create = bool(next) if next != "" else True
 		elif current == "--function":
 			addon_function = next
+		elif current == "--header":
+			file_header = next
 
 def parse_blacklist():
 	global blacklist_parsed
@@ -116,6 +120,16 @@ def write_output():
 		fd_ids.sort()
 
 		output_fs = open(output, "w", encoding = "utf8")
+
+		if file_header != "":
+			file_header_fs = open(file_header, "r", encoding = "utf8")
+
+			for line in file_header_fs:
+				output_fs.write(line)
+
+			output_fs.write("\n")
+			file_header_fs.close()
+
 		output_fs.write("--- @class " + addon_namespace + "\n")
 
 		if addon_create:
