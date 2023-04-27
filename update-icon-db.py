@@ -89,20 +89,9 @@ def write_output():
 
 	try:
 		listfile_fs = open(listfile, "r", encoding = "utf8")
-		output_fs = open(output, "w", encoding = "utf8")
-
-		output_fs.write("--- @class " + addon_namespace + "\n")
-
-		if addon_create:
-			output_fs.write(addon_namespace + " = LibStub(\"AceAddon-3.0\"):NewAddon(\"" + addon_namespace + "\")\n")
-		else:
-			output_fs.write(addon_namespace + " = " + addon_namespace + " or {}\n")
-
-		output_fs.write("\n")
-		output_fs.write("--- @type table<integer,string>\n")
-		output_fs.write("local icons = {\n")
 
 		fd_ids = []
+		file_names = []
 
 		for line in listfile_fs:
 			parts = line.split(",")
@@ -118,13 +107,30 @@ def write_output():
 			if not is_valid_icon_file(fd_id, full_path):
 				continue
 
-			output_fs.write("\t[" + str(fd_id) + "] = \"" + strip_path(file_name).lower() + "\",\n")
+
 			fd_ids.append(int(fd_id))
+			file_names.append(strip_path(file_name).lower().strip())
+
 			num_icons += 1
 
-		output_fs.write("}\n")
-
 		fd_ids.sort()
+
+		output_fs = open(output, "w", encoding = "utf8")
+		output_fs.write("--- @class " + addon_namespace + "\n")
+
+		if addon_create:
+			output_fs.write(addon_namespace + " = LibStub(\"AceAddon-3.0\"):NewAddon(\"" + addon_namespace + "\")\n")
+		else:
+			output_fs.write(addon_namespace + " = " + addon_namespace + " or {}\n")
+
+		output_fs.write("\n")
+		output_fs.write("--- @type table<integer,string>\n")
+		output_fs.write("local icons = {\n")
+
+		for i in range(len(fd_ids)):
+			output_fs.write("\t[" + str(fd_ids[i]) + "] = \"" + file_names[i] + "\",\n")
+
+		output_fs.write("}\n")
 
 		output_fs.write("\n")
 		output_fs.write("--- @type integer[]\n")

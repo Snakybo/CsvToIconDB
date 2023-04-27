@@ -4,7 +4,7 @@ Create a WoW icon database from a CSV file.
 
 ## Instructions
 
-1. Navigate to [WoW.tools Database Browser](https://wow.tools/dbc/?dbc=manifestinterfacedata&build=3.4.0.45189).
+1. Navigate to [wago.tools Database Browser](https://wago.tools/db2/ManifestInterfaceData?build=10.0.7.48520).
 2. Select the desired build.
 3. Download the CSV file.
 4. Run `update-icon-db.py` (required arguments below).
@@ -25,5 +25,5 @@ Argument         | Required | Description
 ### Example
 
 ```python
-py .\update-icon-db.py --input ".\manifestinterfacedata.csv" --output "IconDB.lua" --blacklist ".\icon-blacklist.txt" --namespace "IconDB" --function "GetIcons"
+py .\update-icon-db.py --input ".\ManifestInterfaceData.csv" --output "IconDB.lua" --blacklist ".\icon-blacklist.txt" --namespace "IconDB" --function "GetIcons"
 ```
