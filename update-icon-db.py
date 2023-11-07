@@ -10,6 +10,10 @@ file_header = ""
 
 blacklist_parsed = {}
 
+class IconData:
+	fd_id: int
+	file_name: str
+
 def parse_args():
 	global listfile
 	global output
@@ -75,6 +79,9 @@ def strip_path(path):
 	parts = filename.split(".")
 	return parts[0]
 
+def get_fd_id(data):
+	return data.fd_id
+
 def write_output():
 	global listfile
 	global output
@@ -89,13 +96,10 @@ def write_output():
 		print("No addon function specified, specify one using the --function parameter")
 		sys.exit(1)
 
-	num_icons = 0
-
 	try:
 		listfile_fs = open(listfile, "r", encoding = "utf8")
 
-		fd_ids = []
-		file_names = []
+		icon_data = []
 
 		for line in listfile_fs:
 			parts = line.split(",")
@@ -112,12 +116,13 @@ def write_output():
 				continue
 
 
-			fd_ids.append(int(fd_id))
-			file_names.append(strip_path(file_name).lower().strip())
+			icon = IconData()
+			icon.fd_id = int(fd_id)
+			icon.file_name = strip_path(file_name).lower().strip()
 
-			num_icons += 1
+			icon_data.append(icon)
 
-		fd_ids.sort()
+		icon_data.sort(key=get_fd_id)
 
 		output_fs = open(output, "w", encoding = "utf8")
 
@@ -141,8 +146,8 @@ def write_output():
 		output_fs.write("--- @type table<integer,string>\n")
 		output_fs.write("local icons = {\n")
 
-		for i in range(len(fd_ids)):
-			output_fs.write("\t[" + str(fd_ids[i]) + "] = \"" + file_names[i] + "\",\n")
+		for i in range(len(icon_data)):
+			output_fs.write("\t[" + str(icon_data[i].fd_id) + "] = \"" + icon_data[i].file_name + "\",\n")
 
 		output_fs.write("}\n")
 
@@ -150,8 +155,8 @@ def write_output():
 		output_fs.write("--- @type integer[]\n")
 		output_fs.write("local order = {\n")
 
-		for fd_id in fd_ids:
-			output_fs.write("\t" + str(fd_id) + ",\n")
+		for i in range(len(icon_data)):
+			output_fs.write("\t" + str(icon_data[i].fd_id) + ",\n")
 
 		output_fs.write("}\n")
 		output_fs.write("\n")
@@ -169,7 +174,7 @@ def write_output():
 		print("Unable to write icon data to " + output + ": " + str(fserr))
 		sys.exit(1)
 
-	print("Successfully wrote " + str(num_icons) + " icons to: " + output)
+	print("Successfully wrote " + str(len(icon_data)) + " icons to: " + output)
 
 parse_args()
 parse_blacklist()
