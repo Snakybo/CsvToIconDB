@@ -8,7 +8,7 @@ output = ""
 blacklist = ""
 file_header = ""
 
-blacklist_parsed = {}
+blacklist_parsed: list[str] = []
 
 class IconData:
 	fd_id: int
@@ -61,7 +61,7 @@ def parse_blacklist():
 		print("Unable to read blacklist: " + blacklist + ": " + str(fserr))
 		sys.exit(1)
 
-def is_valid_icon_file(fd_id, path):
+def is_valid_icon_file(fd_id: str, path: str) -> bool:
 	p = path.lower()
 
 	if not p.startswith("interface\\icons\\") or not p.endswith(".blp"):
@@ -72,14 +72,14 @@ def is_valid_icon_file(fd_id, path):
 
 	return True
 
-def strip_path(path):
+def strip_path(path: str) -> str:
 	parts = path.split("/")
 	filename = parts[len(parts) - 1]
 
 	parts = filename.split(".")
 	return parts[0]
 
-def get_fd_id(data):
+def get_fd_id(data: IconData) -> int:
 	return data.fd_id
 
 def write_output():
@@ -99,7 +99,7 @@ def write_output():
 	try:
 		listfile_fs = open(listfile, "r", encoding = "utf8")
 
-		icon_data = []
+		icon_data: list[IconData] = []
 
 		for line in listfile_fs:
 			parts = line.split(",")
