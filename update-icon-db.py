@@ -1,3 +1,4 @@
+import os
 import sys
 
 addon_namespace = ""
@@ -87,6 +88,8 @@ def write_output():
 	global output
 
 	print("Writing icon data from " + listfile + " to " + output)
+
+	os.makedirs(os.path.dirname(output), exist_ok=True)
 
 	if addon_namespace == "":
 		print("No addon namespace specified, specify one using the --namespace parameter")
