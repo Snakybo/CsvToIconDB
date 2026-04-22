@@ -1,2 +1,5 @@
-py .\update-icon-db.py --input "in\ManifestInterfaceData.csv" --output "out\MediaCata.lua" --namespace "ClickedMedia" --function "GetIcons" --header "in\file-header.txt"
+@echo off
+cd /d "%~dp0"
+
+py .\update-icon-db.py --input "%~1" --output "out\MediaCata.lua" --blacklist "in\icon-blacklist.txt" --namespace "ClickedMedia" --function "GetIcons" --header "in\file-header.txt"
 pause
