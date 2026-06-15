@@ -1,0 +1,109 @@
+{
+	"version": "0.2.0",
+	"configurations": [
+		{
+			"name": "Update Classic icons",
+			"type": "debugpy",
+			"request": "launch",
+			"program": "${workspaceFolder}/update-icon-db.py",
+			"cwd": "${workspaceFolder}",
+			"console": "integratedTerminal",
+			"args": [
+				"--input", "${input:csvFile}",
+				"--output", "out/MediaClassic.lua",
+				"--blacklist", "blacklist.txt",
+				"--namespace", "ClickedMedia",
+				"--function", "GetIcons",
+				"--header", "file-header.txt"
+			]
+		},
+		{
+			"name": "Update TBC icons",
+			"type": "debugpy",
+			"request": "launch",
+			"program": "${workspaceFolder}/update-icon-db.py",
+			"cwd": "${workspaceFolder}",
+			"console": "integratedTerminal",
+			"args": [
+				"--input", "${input:csvFile}",
+				"--output", "out/MediaTBC.lua",
+				"--blacklist", "blacklist.txt",
+				"--namespace", "ClickedMedia",
+				"--function", "GetIcons",
+				"--header", "file-header.txt"
+			]
+		},
+		{
+			"name": "Update Wrath icons",
+			"type": "debugpy",
+			"request": "launch",
+			"program": "${workspaceFolder}/update-icon-db.py",
+			"cwd": "${workspaceFolder}",
+			"console": "integratedTerminal",
+			"args": [
+				"--input", "${input:csvFile}",
+				"--output", "out/MediaWrath.lua",
+				"--blacklist", "blacklist.txt",
+				"--namespace", "ClickedMedia",
+				"--function", "GetIcons",
+				"--header", "file-header.txt"
+			]
+		},
+		{
+			"name": "Update Cata icons",
+			"type": "debugpy",
+			"request": "launch",
+			"program": "${workspaceFolder}/update-icon-db.py",
+			"cwd": "${workspaceFolder}",
+			"console": "integratedTerminal",
+			"args": [
+				"--input", "${input:csvFile}",
+				"--output", "out/MediaCata.lua",
+				"--blacklist", "blacklist.txt",
+				"--namespace", "ClickedMedia",
+				"--function", "GetIcons",
+				"--header", "file-header.txt"
+			]
+		},
+		{
+			"name": "Update Mists icons",
+			"type": "debugpy",
+			"request": "launch",
+			"program": "${workspaceFolder}/update-icon-db.py",
+			"cwd": "${workspaceFolder}",
+			"console": "integratedTerminal",
+			"args": [
+				"--input", "${input:csvFile}",
+				"--output", "out/MediaMists.lua",
+				"--blacklist", "blacklist.txt",
+				"--namespace", "ClickedMedia",
+				"--function", "GetIcons",
+				"--header", "file-header.txt"
+			]
+		},
+		{
+			"name": "Update Retail icons",
+			"type": "debugpy",
+			"request": "launch",
+			"program": "${workspaceFolder}/update-icon-db.py",
+			"cwd": "${workspaceFolder}",
+			"console": "integratedTerminal",
+			"args": [
+				"--input", "${input:csvFile}",
+				"--output", "out/MediaRetail.lua",
+				"--blacklist", "blacklist.txt",
+				"--namespace", "ClickedMedia",
+				"--function", "GetIcons",
+				"--header", "file-header.txt"
+			]
+		}
+	],
+	"inputs": [
+		{
+			"id": "csvFile",
+			"type": "promptString",
+			"description": "Path or https:// URL to the ManifestInterfaceData .csv file",
+			"default": "https://wago.tools/db2/ManifestInterfaceData/csv"
+		}
+	]
+}

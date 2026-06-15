@@ -1,5 +1,7 @@
+import io
 import os
 import sys
+import urllib.request
 
 addon_namespace = ""
 addon_function = "GetIcons"
@@ -100,7 +102,13 @@ def write_output():
 		sys.exit(1)
 
 	try:
-		listfile_fs = open(listfile, "r", encoding = "utf8")
+		if listfile.startswith("http://") or listfile.startswith("https://"):
+			print("Downloading icon list from: " + listfile)
+			req = urllib.request.Request(listfile, headers={"User-Agent": "CsvToIconDB"})
+			with urllib.request.urlopen(req) as resp:
+				listfile_fs = io.StringIO(resp.read().decode("utf-8"))
+		else:
+			listfile_fs = open(listfile, "r", encoding = "utf8")
 
 		icon_data: list[IconData] = []
 
