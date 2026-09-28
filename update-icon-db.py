@@ -4,7 +4,6 @@ import sys
 import urllib.request
 
 addon_namespace = ""
-addon_function = "GetIcons"
 addon_create = False
 listfile = ""
 output = ""
@@ -22,7 +21,7 @@ def parse_args():
 	global output
 	global blacklist
 	global addon_namespace
-	global addon_function
+	global addon_private_namespace
 	global addon_create
 	global file_header
 
@@ -41,10 +40,10 @@ def parse_args():
 			blacklist = next
 		elif current == "--namespace":
 			addon_namespace = next
+		elif current == "--private-namespace":
+			addon_private_namespace = next
 		elif current == "--create-addon":
 			addon_create = bool(next) if next != "" else True
-		elif current == "--function":
-			addon_function = next
 		elif current == "--header":
 			file_header = next
 
@@ -97,8 +96,8 @@ def write_output():
 		print("No addon namespace specified, specify one using the --namespace parameter")
 		sys.exit(1)
 
-	if addon_function == "":
-		print("No addon function specified, specify one using the --function parameter")
+	if addon_private_namespace == "":
+		print("No private addon namespace specified, specify one using the --namespace parameter")
 		sys.exit(1)
 
 	try:
@@ -154,6 +153,10 @@ def write_output():
 			output_fs.write(addon_namespace + " = " + addon_namespace + " or {}\n")
 
 		output_fs.write("\n")
+		output_fs.write("--- @class " + addon_private_namespace + "\n")
+		output_fs.write("local Addon = select(2, ...)\n")
+
+		output_fs.write("\n")
 		output_fs.write("--- @type table<integer,string>\n")
 		output_fs.write("local icons = {\n")
 
@@ -172,12 +175,10 @@ def write_output():
 		output_fs.write("}\n")
 		output_fs.write("\n")
 
-		output_fs.write("--- @return table<integer,string>\n")
-		output_fs.write("--- @return integer[]\n")
-		output_fs.write("function " + addon_namespace + ":" + addon_function + "()\n")
-		output_fs.write("\treturn icons, order\n")
-		output_fs.write("end")
-		output_fs.write("\n")
+		output_fs.write("Addon:SetProvider({\n")
+		output_fs.write("\ticons = icons,\n")
+		output_fs.write("\torder = order\n")
+		output_fs.write("})\n")
 
 		listfile_fs.close()
 		output_fs.close()

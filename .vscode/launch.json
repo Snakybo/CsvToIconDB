@@ -2,7 +2,7 @@
 	"version": "0.2.0",
 	"configurations": [
 		{
-			"name": "Update Classic icons",
+			"name": "Update Vanilla icons",
 			"type": "debugpy",
 			"request": "launch",
 			"program": "${workspaceFolder}/update-icon-db.py",
@@ -10,10 +10,10 @@
 			"console": "integratedTerminal",
 			"args": [
 				"--input", "${input:csvFile}",
-				"--output", "out/MediaClassic.lua",
+				"--output", "out/MediaVanilla.lua",
 				"--blacklist", "blacklist.txt",
 				"--namespace", "ClickedMedia",
-				"--function", "GetIcons",
+				"--private-namespace", "ClickedMediaInternal",
 				"--header", "file-header.txt"
 			]
 		},
@@ -26,10 +26,10 @@
 			"console": "integratedTerminal",
 			"args": [
 				"--input", "${input:csvFile}",
-				"--output", "out/MediaForever.lua",
+				"--output", "out/MediaCamelot.lua",
 				"--blacklist", "blacklist.txt",
 				"--namespace", "ClickedMedia",
-				"--function", "GetIcons",
+				"--private-namespace", "ClickedMediaInternal",
 				"--header", "file-header.txt"
 			]
 		},
@@ -45,7 +45,7 @@
 				"--output", "out/MediaTBC.lua",
 				"--blacklist", "blacklist.txt",
 				"--namespace", "ClickedMedia",
-				"--function", "GetIcons",
+				"--private-namespace", "ClickedMediaInternal",
 				"--header", "file-header.txt"
 			]
 		},
@@ -61,7 +61,7 @@
 				"--output", "out/MediaWrath.lua",
 				"--blacklist", "blacklist.txt",
 				"--namespace", "ClickedMedia",
-				"--function", "GetIcons",
+				"--private-namespace", "ClickedMediaInternal",
 				"--header", "file-header.txt"
 			]
 		},
@@ -77,7 +77,7 @@
 				"--output", "out/MediaCata.lua",
 				"--blacklist", "blacklist.txt",
 				"--namespace", "ClickedMedia",
-				"--function", "GetIcons",
+				"--private-namespace", "ClickedMediaInternal",
 				"--header", "file-header.txt"
 			]
 		},
@@ -93,7 +93,7 @@
 				"--output", "out/MediaMists.lua",
 				"--blacklist", "blacklist.txt",
 				"--namespace", "ClickedMedia",
-				"--function", "GetIcons",
+				"--private-namespace", "ClickedMediaInternal",
 				"--header", "file-header.txt"
 			]
 		},
@@ -106,10 +106,10 @@
 			"console": "integratedTerminal",
 			"args": [
 				"--input", "${input:csvFile}",
-				"--output", "out/MediaRetail.lua",
+				"--output", "out/MediaStandard.lua",
 				"--blacklist", "blacklist.txt",
 				"--namespace", "ClickedMedia",
-				"--function", "GetIcons",
+				"--private-namespace", "ClickedMediaInternal",
 				"--header", "file-header.txt"
 			]
 		}
