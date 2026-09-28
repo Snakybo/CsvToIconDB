@@ -18,6 +18,22 @@
 			]
 		},
 		{
+			"name": "Update Forever icons",
+			"type": "debugpy",
+			"request": "launch",
+			"program": "${workspaceFolder}/update-icon-db.py",
+			"cwd": "${workspaceFolder}",
+			"console": "integratedTerminal",
+			"args": [
+				"--input", "${input:csvFile}",
+				"--output", "out/MediaForever.lua",
+				"--blacklist", "blacklist.txt",
+				"--namespace", "ClickedMedia",
+				"--function", "GetIcons",
+				"--header", "file-header.txt"
+			]
+		},
+		{
 			"name": "Update TBC icons",
 			"type": "debugpy",
 			"request": "launch",
